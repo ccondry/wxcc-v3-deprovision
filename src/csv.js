@@ -4,7 +4,7 @@ const fs = require('fs')
 const getOldUsers = require('./models/get-old-users')
 
 const maxUsers = process.env.MAX_USERS
-const filename = 'test.csv'
+const filename = 'users.csv'
 
 async function createCsv () {
   // get oldest users
