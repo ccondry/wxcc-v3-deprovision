@@ -8,7 +8,7 @@ async function deleteLdapUser (cn) {
   return ldap.deleteUser({
     adminDn: process.env.LDAP_ADMIN_DN,
     adminPassword: process.env.LDAP_ADMIN_PASSWORD,
-    userDn: `CN=${cn},OU=Sync2Webex,DC=dcloud,DC=cisco,DC=com`
+    userDn: `CN=${cn},${process.env.LDAP_USER_SEARCH_DN}`
   })
 }
 
