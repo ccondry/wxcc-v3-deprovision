@@ -4,10 +4,15 @@
   "main": "index.js",
   "author": "Coty Condry <ccondry@cisco.com>",
   "license": "MIT",
+  "scripts": {
+    "csv": "NODE_EXTRA_CA_CERTS=certs/extra-cas.pem node src/csv",
+    "clean": "NODE_EXTRA_CA_CERTS=certs/extra-cas.pem node src/clean"
+  },
   "dependencies": {
     "@ccondry/mongo-wrapper": "^2020.10.21",
-    "cwcc-provision-client": "^0.3.2",
     "dotenv": "^8.2.0",
-    "moment": "^2.29.1"
+    "moment": "^2.29.1",
+    "node-fetch": "^2.6.1",
+    "simple-ldap-client": "^2020.12.15"
   }
 }

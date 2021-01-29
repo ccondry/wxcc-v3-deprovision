@@ -1,12 +1,10 @@
-require('dotenv').config()
-
-const db = require('./models/db')
-const cwcc = require('./models/cwcc')
 const moment = require('moment')
+const db = require('./db')
+const cwcc = require('./cwcc')
 
-async function main () {
+module.exports = async function (maxUsers = process.env.MAX_USERS || 240) {
   try {
-    const cwccUserList = await cwcc.user.list()
+    const cwccUserList = await cwcc.listUsers()
     const cwccUsers = cwccUserList.details.users
     // console.log(cwccUsers[0])
 
@@ -37,6 +35,7 @@ async function main () {
       const ret = {
         toolboxId: tu.id,
         username: tu.username,
+        email: tu.email,
         firstName: tu.firstName, 
         lastName: tu.lastName, 
         lastToolboxLogin: moment(tu.lastLogin).fromNow()
@@ -49,7 +48,7 @@ async function main () {
       })
       // map rbarrow's cwcc ID, if found
       if (rick) {
-        console.log('found rbarrows' + tu.id)
+        // console.log('found rbarrows' + tu.id)
         ret.rickId = rick.id
       }
       
@@ -60,19 +59,19 @@ async function main () {
       })
       // map sjeffers's cwcc ID, if found
       if (sandra) {
-        console.log('found sjeffers' + tu.id)
+        // console.log('found sjeffers' + tu.id)
         ret.sandraId = sandra.id
       }
 
       return ret
     })
 
-    const coty = mappedUsers.find(v => v.id === '0325')
-    console.log(coty)
-    process.exit(0)
+    // const coty = mappedUsers.find(v => v.toolboxId === '0325')
+    // console.log(coty)
+
+    return mappedUsers.slice(maxUsers)
   } catch (e) {
     console.log('error', e.message)
   }
 }
 
-main()
